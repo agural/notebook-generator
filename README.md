@@ -7,23 +7,23 @@ pdflatex
 
     [sudo] aptitude install texlive
 
-## Install
+nodejs
 
-    [sudo] npm install -g notebook-generator
+	[sudo] aptitude install nodejs
+
+npm
+
+	[sudo aptitude install npm
+
+nodejs module `through2`
+
+    [sudo] npm install through2
 
 ## Use
 
-    notebook-generator dir_codes <output_path>
+    sh run.sh
 
-example:
-
-    notebook-generator ./ /tmp/team_reference.pdf
-    notebook-generator ./
-
-The second one will create a 'notebook.pdf' file in the current directory.
-
-This is an example in pdf : https://github.com/pin3da/Programming-contest/blob/master/codes/notebook.pdf
-
+The generated pdf is located at ./gen/notebook.pdf and will be launched automatically (you may need to modify `run.sh` to accommodate your local pdf reader.
 
 ## Files
 
