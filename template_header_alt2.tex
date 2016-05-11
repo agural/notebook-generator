@@ -10,9 +10,8 @@
 \usepackage{color}
 \usepackage{geometry}
 \usepackage{fancyhdr}
-%\usepackage{titlesec}
 
-\geometry{verbose,landscape,letterpaper,tmargin=2cm,bmargin=1cm,lmargin=1cm,rmargin=1cm}
+\geometry{verbose,landscape,letterpaper,tmargin=1cm,bmargin=1cm,lmargin=1cm,rmargin=1cm}
 
 \usepackage{listings}
 \usepackage{color}
@@ -48,17 +47,14 @@
 
 \renewcommand{\baselinestretch}{0.8}
 
-%\makeatletter
-%\titleformat{\section}[runin]{}{}{0pt}{\@gobble}
-%\titleformat{\subsection}[runin]{}{}{0pt}{\@gobble}
-%\makeatother
-%\titlespacing{\section}{\parindent}{0pt}{0pt}
-%\titlespacing{\subsection}{\parindent}{0pt}{0pt}
+\titleformat*{\section}{\normalfont\fontsize{10}{10}\bfseries}
+\titleformat*{\subsection}{\normalfont\fontsize{10}{10}\bfseries}
 
 \begin{document}
 
-%\title{California Institute of Technology}
-%\author{}
-%\maketitle
+\title{California Institute of Technology}
+\author{}
+\maketitle
 \tableofcontents
 \lstloadlanguages{C++,Java}
+
