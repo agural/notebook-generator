@@ -29,33 +29,24 @@ struct point {
     point(ntype xx = 0, ntype yy = 0) : x(xx), y(yy) {}
 };
 
-bool operator==(const point &a, const point &b)
-{
-    return a.x == b.x && a.y == b.y;
-}
+bool operator==(const point &a, const point &b) {
+    return a.x == b.x && a.y == b.y; }
 
 // sorts points on x-coordinate
-bool on_x(const point &a, const point &b)
-{
-    return a.x < b.x;
-}
+bool on_x(const point &a, const point &b) {
+    return a.x < b.x; }
 
 // sorts points on y-coordinate
-bool on_y(const point &a, const point &b)
-{
-    return a.y < b.y;
-}
+bool on_y(const point &a, const point &b) {
+    return a.y < b.y; }
 
 // squared distance between points
-ntype pdist2(const point &a, const point &b)
-{
+ntype pdist2(const point &a, const point &b) {
     ntype dx = a.x-b.x, dy = a.y-b.y;
-    return dx*dx + dy*dy;
-}
+    return dx*dx + dy*dy; }
 
 // bounding box for a set of points
-struct bbox
-{
+struct bbox {
     ntype x0, x1, y0, y1;
     
     bbox() : x0(sentry), x1(-sentry), y0(sentry), y1(-sentry) {}
@@ -89,8 +80,7 @@ struct bbox
 };
 
 // stores a single node of the kd-tree, either internal or leaf
-struct kdnode 
-{
+struct kdnode {
     bool leaf;      // true if this is a leaf node (has one point)
     point pt;       // the single point of this is a leaf
     bbox bound;     // bounding box for set of points in children
@@ -106,8 +96,7 @@ struct kdnode
     }
     
     // recursively builds a kd-tree from a given cloud of points
-    void construct(vector<point> &vp)
-    {
+    void construct(vector<point> &vp) {
         // compute bounding box for points at this node
         bound.compute(vp);
         
@@ -115,14 +104,12 @@ struct kdnode
         if (vp.size() == 1) {
             leaf = true;
             pt = vp[0];
-        }
-        else {
+        } else {
             // split on x if the bbox is wider than high (not best heuristic...)
             if (bound.x1-bound.x0 >= bound.y1-bound.y0)
                 sort(vp.begin(), vp.end(), on_x);
             // otherwise split on y-coordinate
-            else
-                sort(vp.begin(), vp.end(), on_y);
+            else sort(vp.begin(), vp.end(), on_y);
             
             // divide by taking half the array for each child
             // (not best performance if many duplicates in the middle)
@@ -136,8 +123,7 @@ struct kdnode
 };
 
 // simple kd-tree class to hold the tree and handle queries
-struct kdtree
-{
+struct kdtree {
     kdnode *root;
     
     // constructs a kd-tree from a points (copied here, as it sorts them)
@@ -149,8 +135,7 @@ struct kdtree
     ~kdtree() { delete root; }
     
     // recursive search method returns squared distance to nearest point
-    ntype search(kdnode *node, const point &p)
-    {
+    ntype search(kdnode *node, const point &p) {
         if (node->leaf) {
             // commented special case tells a point not to find itself
 //            if (p == node->pt) return sentry;
@@ -183,11 +168,8 @@ struct kdtree
     }
 };
 
-// --------------------------------------------------------------------------
 // some basic test code here
-
-int main()
-{
+int main() {
     // generate some random points for a kd-tree
     vector<point> vp;
     for (int i = 0; i < 100000; ++i) {
@@ -201,8 +183,4 @@ int main()
         cout << "Closest squared distance to (" << q.x << ", " << q.y << ")"
              << " is " << tree.nearest(q) << endl;
     }    
-
-    return 0;
 }
-
-// --------------------------------------------------------------------------
