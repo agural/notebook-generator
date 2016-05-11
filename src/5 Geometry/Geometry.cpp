@@ -206,70 +206,90 @@ bool IsSimple(const vector<PT> &p) {
   return true;
 }
 
-int main() {
+// Plane distance between parallel planes aX + bY + cZ + d1 = 0 and
+// aX + bY + cZ + d2 = 0 is abs(d1 - d2) / sqrt(a*a + b*b + c*c)
   
+// distance from point (px, py, pz) to line (x1, y1, z1)-(x2, y2, z2)
+// (or ray, or segment; in the case of the ray, the endpoint is the
+// first point)
+  public static final int LINE = 0;
+  public static final int SEGMENT = 1;
+  public static final int RAY = 2;
+  public static double ptLineDistSq(double x1, double y1, double z1,
+      double x2, double y2, double z2, double px, double py, double pz,
+      int type) {
+    double pd2 = (x1-x2)*(x1-x2) + (y1-y2)*(y1-y2) + (z1-z2)*(z1-z2);
+    double x, y, z;
+    if (pd2 == 0) {
+      x = x1;
+      y = y1;
+      z = z1;} 
+    else {
+      double u = ((px-x1)*(x2-x1) + (py-y1)*(y2-y1) + (pz-z1)*(z2-z1)) / pd2;
+      x = x1 + u * (x2 - x1);
+      y = y1 + u * (y2 - y1);
+      z = z1 + u * (z2 - z1);
+      if (type != LINE && u < 0) {
+        x = x1;
+        y = y1;
+        z = z1;}
+      if (type == SEGMENT && u > 1.0) {
+        x = x2;
+        y = y2;
+        z = z2;}
+    }
+    return (x-px)*(x-px) + (y-py)*(y-py) + (z-pz)*(z-pz);
+  }
+
+int main() {
   // expected: (-5,2)
   cerr << RotateCCW90(PT(2,5)) << endl;
-  
   // expected: (5,-2)
   cerr << RotateCW90(PT(2,5)) << endl;
-  
   // expected: (-5,2)
   cerr << RotateCCW(PT(2,5),M_PI/2) << endl;
-  
   // expected: (5,2)
   cerr << ProjectPointLine(PT(-5,-2), PT(10,4), PT(3,7)) << endl;
-  
   // expected: (5,2) (7.5,3) (2.5,1)
   cerr << ProjectPointSegment(PT(-5,-2), PT(10,4), PT(3,7)) << " "
        << ProjectPointSegment(PT(7.5,3), PT(10,4), PT(3,7)) << " "
        << ProjectPointSegment(PT(-5,-2), PT(2.5,1), PT(3,7)) << endl;
-  
   // expected: 6.78903
   cerr << DistancePointPlane(4,-4,3,2,-2,5,-8) << endl;
-  
   // expected: 1 0 1
   cerr << LinesParallel(PT(1,1), PT(3,5), PT(2,1), PT(4,5)) << " "
        << LinesParallel(PT(1,1), PT(3,5), PT(2,0), PT(4,5)) << " "
        << LinesParallel(PT(1,1), PT(3,5), PT(5,9), PT(7,13)) << endl;
-  
   // expected: 0 0 1
   cerr << LinesCollinear(PT(1,1), PT(3,5), PT(2,1), PT(4,5)) << " "
        << LinesCollinear(PT(1,1), PT(3,5), PT(2,0), PT(4,5)) << " "
        << LinesCollinear(PT(1,1), PT(3,5), PT(5,9), PT(7,13)) << endl;
-  
   // expected: 1 1 1 0
   cerr << SegmentsIntersect(PT(0,0), PT(2,4), PT(3,1), PT(-1,3)) << " "
        << SegmentsIntersect(PT(0,0), PT(2,4), PT(4,3), PT(0,5)) << " "
        << SegmentsIntersect(PT(0,0), PT(2,4), PT(2,-1), PT(-2,1)) << " "
        << SegmentsIntersect(PT(0,0), PT(2,4), PT(5,5), PT(1,7)) << endl;
-  
   // expected: (1,2)
   cerr << ComputeLineIntersection(PT(0,0), PT(2,4), PT(3,1), PT(-1,3)) << endl;
-  
   // expected: (1,1)
   cerr << ComputeCircleCenter(PT(-3,4), PT(6,1), PT(4,5)) << endl;
-  
   vector<PT> v; 
   v.push_back(PT(0,0));
   v.push_back(PT(5,0));
   v.push_back(PT(5,5));
   v.push_back(PT(0,5));
-  
   // expected: 1 1 1 0 0
   cerr << PointInPolygon(v, PT(2,2)) << " "
        << PointInPolygon(v, PT(2,0)) << " "
        << PointInPolygon(v, PT(0,2)) << " "
        << PointInPolygon(v, PT(5,2)) << " "
        << PointInPolygon(v, PT(2,5)) << endl;
-  
   // expected: 0 1 1 1 1
   cerr << PointOnPolygon(v, PT(2,2)) << " "
        << PointOnPolygon(v, PT(2,0)) << " "
        << PointOnPolygon(v, PT(0,2)) << " "
        << PointOnPolygon(v, PT(5,2)) << " "
        << PointOnPolygon(v, PT(2,5)) << endl;
-  
   // expected: (1,6)
   //           (5,4) (4,5)
   //           blank line
@@ -288,7 +308,6 @@ int main() {
   for (int i = 0; i < u.size(); i++) cerr << u[i] << " "; cerr << endl;
   u = CircleCircleIntersection(PT(1,1), PT(4.5,4.5), 5, sqrt(2.0)/2.0);
   for (int i = 0; i < u.size(); i++) cerr << u[i] << " "; cerr << endl;
-  
   // area should be 5.0
   // centroid should be (1.1666666, 1.166666)
   PT pa[] = { PT(0,0), PT(5,0), PT(1,1), PT(0,5) };
@@ -296,6 +315,4 @@ int main() {
   PT c = ComputeCentroid(p);
   cerr << "Area: " << ComputeArea(p) << endl;
   cerr << "Centroid: " << c << endl;
-  
-  return 0;
 }
