@@ -81,6 +81,48 @@ void linear_diophantine(int a, int b, int c, int &x, int &y) {
         y = (c-a*x)/b;
     }
 }
+// computes n^k (mod m)
+long long power(long long n, long long k, long long m = LLONG_MAX) {
+    long long ret = 1;
+    while (k) {
+        if (k & 1) ret = (ret * n) % m;
+        n = (n * n) % m;
+        k >>= 1;
+    }
+    return ret;
+}
+// computes nCm
+long long binomial(int n, int m) {
+    if (n > m || n < 0) return 0;
+    long long ans = 1, ans2 = 1;
+    for (int i = 0 ; i < m ; i++) {
+        ans *= n - i;
+        ans2 *= i + 1;
+    }
+    return ans / ans2;
+}
+// computes the nth Catalan number
+long long catalan_number(int n) {
+    return binomial(n * 2, n) / (n + 1);
+}
+// computes phi(n) (use euler_totient)
+long long euler_totient2(long long n, long long ps) {
+    for (long long i = ps ; i * i <= n ; i++) {
+        if (n % i == 0) {
+            long long p = 1;
+            while (n % i == 0) {
+                n /= i;
+                p *= i;
+            }
+            return (p - p / i) * euler_totient2(n, i + 1);
+        }
+        if (i > 2) i++;
+    }
+    return n - 1;
+}
+long long euler_totient(long long n) {
+    return euler_totient2(n, 2);
+}
 
 int main() {
     // expected: 2
