@@ -97,12 +97,8 @@ struct Segtree2d {
 /* 2D Segment Tree for range minimum query; a override of Segtree2d class */
 struct Segtree2dMin : Segtree2d {
     // overload maxNode() function to return minimum value
-    Point maxNode(Point a, Point b) {
-        return min(a, b);
-    }
-    Point def() {
-        return Point(0, 0, INF);
-    }
+    Point maxNode(Point a, Point b) { return min(a, b); }
+    Point def() { return Point(0, 0, INF); }
 };
 
 // initialize class objects
