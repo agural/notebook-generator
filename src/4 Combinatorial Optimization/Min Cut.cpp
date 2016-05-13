@@ -8,23 +8,14 @@
 //
 // OUTPUT:
 //     - (min cut value, nodes in half of min cut)
-
-#include <cmath>
-#include <vector>
-#include <iostream>
-
-using namespace std;
-
 typedef vector<int> VI;
 typedef vector<VI> VVI;
-
 const int INF = 1000000000;
 
 pair<int, VI> GetMinCut(VVI &weights) {
   int N = weights.size();
   VI used(N), cut, best_cut;
   int best_weight = -1;
-  
   for (int phase = N-1; phase >= 0; phase--) {
     VI w = weights[0];
     VI added = used;

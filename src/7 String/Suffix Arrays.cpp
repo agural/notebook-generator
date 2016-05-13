@@ -8,13 +8,6 @@
 //          of substring s[i...L-1] in the list of sorted suffixes.
 //          That is, if we take the inverse of the permutation suffix[],
 //          we get the actual suffix array.
-
-#include <vector>
-#include <iostream>
-#include <string>
-
-using namespace std;
-
 struct SuffixArray {
   const int L;
   string s;
@@ -51,7 +44,6 @@ struct SuffixArray {
 };
 
 int main() {
-
   // bobocel is the 0'th suffix
   //  obocel is the 5'th suffix
   //   bocel is the 1'st suffix
@@ -61,7 +53,6 @@ int main() {
   //       l is the 4'th suffix
   SuffixArray suffix("bobocel");
   vector<int> v = suffix.GetSuffixArray();
-  
   // Expected output: 0 5 1 6 2 3 4
   //                  2
   for (int i = 0; i < v.size(); i++) cout << v[i] << " ";

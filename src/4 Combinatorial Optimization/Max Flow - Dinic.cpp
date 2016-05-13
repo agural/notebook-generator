@@ -13,17 +13,11 @@
 //     - To obtain actual flow values, look at edges with capacity > 0
 //       (zero capacity edges are residual edges).
 
-#include <iostream>
-#include <vector>
-
-using namespace std;
-typedef long long LL;
-
 struct Edge {
   int from, to, cap, flow, index;
   Edge(int from, int to, int cap, int flow, int index) :
     from(from), to(to), cap(cap), flow(flow), index(index) {}
-  LL rcap() { return cap - flow; }
+  ll rcap() { return cap - flow; }
 };
 
 struct Dinic {
@@ -40,12 +34,10 @@ struct Dinic {
     G[from].push_back(Edge(from, to, cap, 0, G[to].size()));
     G[to].push_back(Edge(to, from, 0, 0, G[from].size() - 1));
   }
-
-  LL BlockingFlow(int s, int t) {
+  ll BlockingFlow(int s, int t) {
     layer.clear(); layer.resize(N, -1);
     layer[s] = 0;
     Lf.clear(); Lf.resize(N);
-    
     int head = 0, tail = 0;
     Q[tail++] = s;
     while (head < tail) {
@@ -62,13 +54,12 @@ struct Dinic {
       }
     }
     if (layer[t] == -1) return 0;
-
-    LL totflow = 0;
+    ll totflow = 0;
     vector<Edge *> P;
     while (!Lf[s].empty()) {
       int curr = P.empty() ? s : P.back()->to;
       if (curr == t) { // Augment
-        LL amt = P.front()->rcap();
+        ll amt = P.front()->rcap();
         for (int i = 0; i < P.size(); ++i) {
           amt = min(amt, P[i]->rcap());
         }
@@ -93,10 +84,9 @@ struct Dinic {
     }
     return totflow;
   }
-
-  LL GetMaxFlow(int s, int t) {
-    LL totflow = 0;
-    while (LL flow = BlockingFlow(s, t))
+  ll GetMaxFlow(int s, int t) {
+    ll totflow = 0;
+    while (ll flow = BlockingFlow(s, t))
       totflow += flow;
     return totflow;
   }

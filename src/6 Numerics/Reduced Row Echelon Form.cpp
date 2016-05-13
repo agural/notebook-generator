@@ -8,14 +8,11 @@
 //
 // OUTPUT:   rref[][] = an nxm matrix (stored in a[][])
 //           returns rank of a[][]
-
-const double EPSILON = 1e-7;
-
 typedef vector<double> VD;
 typedef vector<VD> VVD;
+const double EPSILON = 1e-7;
 
 // returns rank
-
 int rref (VVD &a){
   int i,j,r,c;
   int n = a.size();
@@ -24,8 +21,7 @@ int rref (VVD &a){
     j=r;
     for (i=r+1;i<n;i++) if (fabs(a[i][c])>fabs(a[j][c])) j = i;
     if (fabs(a[j][c])<EPSILON) continue;
-    for (i=0;i<m;i++) swap (a[j][i],a[r][i]);
-    
+    for (i=0;i<m;i++) swap(a[j][i],a[r][i]);
     double s = a[r][c];
     for (j=0;j<m;j++) a[r][j] /= s;
     for (i=0;i<n;i++) if (i != r){

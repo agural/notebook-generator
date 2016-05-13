@@ -26,22 +26,17 @@ namespace aho_corasick {
             if (!nloc) nloc = tail++;
             loc = nloc;
         }
-
         trie[loc].dict = loc;
         trie[loc].patt = patterns.size();
         patterns.push_back(s);
     }
-
     void calc_links() {
         queue<int> bfs({0});
-
         while (!bfs.empty()) {
             int loc = bfs.front(); bfs.pop();
             int fail = trie[loc].suff;
-
             if (!trie[loc].dict) 
                 trie[loc].dict = trie[fail].dict;
-
             for (int c = 0; c < SIGMA; c++) {
                 int &succ = trie[loc].link[c];
                 if (succ) {
@@ -51,13 +46,10 @@ namespace aho_corasick {
             }
         }
     }
-
     void match(string &s, vector<bool> &matches) {
         int loc = 0;
-
         for (char c : s) {
             loc = trie[loc].link[c-'a'];
-
             for (int dm = trie[loc].dict; dm; dm = trie[trie[dm].suff].dict) {
                 if (matches[trie[dm].patt]) break;
                 matches[trie[dm].patt] = true;

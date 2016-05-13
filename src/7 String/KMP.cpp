@@ -6,10 +6,8 @@ template<typename T> struct kmp {
     kmp(vector<T> _needle) {
         needle = _needle;
         M = needle.size();
-
         succ.resize(M + 1);
         succ[0] = -1, succ[1] = 0;
-
         int cur = 0;
         for (int i = 2; i <= M; ) {
             if (needle[i-1] == needle[cur]) succ[i++] = ++cur;
@@ -17,11 +15,9 @@ template<typename T> struct kmp {
             else succ[i++] = 0;
         }
     }
-
     vector<bool> find(vector<T> &haystack) {
         int N = haystack.size(), i = 0;
         vector<bool> res(N);
-
         for (int m = 0; m + i < N; ) {
             if (i < M && needle[i] == haystack[m + i]) {
                 if (i == M - 1) res[m] = true;
@@ -34,7 +30,6 @@ template<typename T> struct kmp {
                 m++;
             }
         }
-
         return res;
     }
 };

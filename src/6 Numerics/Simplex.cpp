@@ -14,20 +14,10 @@
 //
 // To use this code, create an LPSolver object with A, b, and c as
 // arguments.  Then, call Solve(x).
-
-#include <iostream>
-#include <iomanip>
-#include <vector>
-#include <cmath>
-#include <limits>
-
-using namespace std;
-
 typedef long double DOUBLE;
 typedef vector<DOUBLE> VD;
 typedef vector<VD> VVD;
 typedef vector<int> VI;
-
 const DOUBLE EPS = 1e-9;
 
 struct LPSolver {
@@ -42,7 +32,6 @@ struct LPSolver {
     for (int j = 0; j < n; j++) { N[j] = j; D[m][j] = -c[j]; }
     N[n] = -1; D[m + 1][n] = 1;
   }
-
   void Pivot(int r, int s) {
     for (int i = 0; i < m + 2; i++) if (i != r)
       for (int j = 0; j < n + 2; j++) if (j != s)
@@ -52,7 +41,6 @@ struct LPSolver {
     D[r][s] = 1.0 / D[r][s];
     swap(B[r], N[s]);
   }
-
   bool Simplex(int phase) {
     int x = phase == 1 ? m + 1 : m;
     while (true) {
@@ -72,7 +60,6 @@ struct LPSolver {
       Pivot(r, s);
     }
   }
-
   DOUBLE Solve(VD &x) {
     int r = 0;
     for (int i = 1; i < m; i++) if (D[i][n + 1] < D[r][n + 1]) r = i;
@@ -94,7 +81,6 @@ struct LPSolver {
 };
 
 int main() {
-
   const int m = 4;
   const int n = 3;
   DOUBLE _A[m][n] = {
@@ -105,7 +91,6 @@ int main() {
   };
   DOUBLE _b[m] = { 10, -4, 5, -5 };
   DOUBLE _c[n] = { 1, -1, 0 };
-
   VVD A(m);
   VD b(_b, _b + m);
   VD c(_c, _c + n);
@@ -114,7 +99,6 @@ int main() {
   LPSolver solver(A, b, c);
   VD x;
   DOUBLE value = solver.Solve(x);
-
   cerr << "VALUE: " << value << endl; // VALUE: 1.29032
   cerr << "SOLUTION:"; // SOLUTION: 1.74194 0.451613 1
   for (size_t i = 0; i < x.size(); i++) cerr << " " << x[i];

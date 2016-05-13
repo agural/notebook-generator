@@ -1,17 +1,13 @@
 // O(sqrt(x)) Exhaustive Primality Test
-#include <cmath>
 #define EPS 1e-7
 typedef long long LL;
-bool IsPrimeSlow (LL x)
-{
+bool IsPrimeSlow (LL x) {
   if(x<=1) return false;
   if(x<=3) return true;
   if (!(x%2) || !(x%3)) return false;
   LL s=(LL)(sqrt((double)(x))+EPS);
   for(LL i=5;i<=s;i+=6)
-  {
     if (!(x%i) || !(x%(i+2))) return false;
-  }
   return true;
 }
 // Primes less than 1000:
@@ -29,23 +25,8 @@ bool IsPrimeSlow (LL x)
 //    751   757   761   769   773   787   797   809   811   821   823   827
 //    829   839   853   857   859   863   877   881   883   887   907   911
 //    919   929   937   941   947   953   967   971   977   983   991   997
-
 // Other primes:
-//    The largest prime smaller than 10 is 7.
-//    The largest prime smaller than 100 is 97.
-//    The largest prime smaller than 1000 is 997.
-//    The largest prime smaller than 10000 is 9973.
-//    The largest prime smaller than 100000 is 99991.
-//    The largest prime smaller than 1000000 is 999983.
-//    The largest prime smaller than 10000000 is 9999991.
-//    The largest prime smaller than 100000000 is 99999989.
-//    The largest prime smaller than 1000000000 is 999999937.
-//    The largest prime smaller than 10000000000 is 9999999967.
-//    The largest prime smaller than 100000000000 is 99999999977.
-//    The largest prime smaller than 1000000000000 is 999999999989.
-//    The largest prime smaller than 10000000000000 is 9999999999971.
-//    The largest prime smaller than 100000000000000 is 99999999999973.
-//    The largest prime smaller than 1000000000000000 is 999999999999989.
-//    The largest prime smaller than 10000000000000000 is 9999999999999937.
-//    The largest prime smaller than 100000000000000000 is 99999999999999997.
-//    The largest prime smaller than 1000000000000000000 is 999999999999999989.
+//    The largest prime smaller than 10^x:
+//    7 97 997 9973 99991 999983 9999991 99999989 999999937 9999999967
+//    99999999977 999999999989 9999999999971 99999999999973 999999999999989
+//    9999999999999937 99999999999999997 999999999999999989

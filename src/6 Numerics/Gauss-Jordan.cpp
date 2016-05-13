@@ -13,19 +13,11 @@
 // OUTPUT:   X      = an nxm matrix (stored in b[][])
 //           A^{-1} = an nxn matrix (stored in a[][])
 //           returns determinant of a[][]
-
-#include <iostream>
-#include <vector>
-#include <cmath>
-
-using namespace std;
-
-const double EPS = 1e-10;
-
 typedef vector<int> VI;
 typedef double T;
 typedef vector<T> VT;
 typedef vector<VT> VVT;
+const double EPS = 1e-10;
 
 T GaussJordan(VVT &a, VVT &b) {
   const int n = a.size();
@@ -45,7 +37,6 @@ T GaussJordan(VVT &a, VVT &b) {
     if (pj != pk) det *= -1;
     irow[i] = pj;
     icol[i] = pk;
-
     T c = 1.0 / a[pk][pk];
     det *= a[pk][pk];
     a[pk][pk] = 1.0;
@@ -58,11 +49,9 @@ T GaussJordan(VVT &a, VVT &b) {
       for (int q = 0; q < m; q++) b[p][q] -= b[pk][q] * c;      
     }
   }
-
   for (int p = n-1; p >= 0; p--) if (irow[p] != icol[p]) {
     for (int k = 0; k < n; k++) swap(a[k][irow[p]], a[k][icol[p]]);
   }
-
   return det;
 }
 
@@ -78,10 +67,8 @@ int main() {
   }
   
   double det = GaussJordan(a, b);
-  
   // expected: 60  
   cout << "Determinant: " << det << endl;
-
   // expected: -0.233333 0.166667 0.133333 0.0666667
   //           0.166667 0.166667 0.333333 -0.333333
   //           0.233333 0.833333 -0.133333 -0.0666667
@@ -92,7 +79,6 @@ int main() {
       cout << a[i][j] << ' ';
     cout << endl;
   }
-  
   // expected: 1.63333 1.3
   //           -0.166667 0.5
   //           2.36667 1.7
