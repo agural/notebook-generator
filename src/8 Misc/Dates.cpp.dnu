@@ -22,7 +22,7 @@ int dateToInt (int m, int d, int y){
 // converts integer (Julian day number) to Gregorian date: month/day/year
 void intToDate (int jd, int &m, int &d, int &y){
   int x, n, i, j;
-  
+
   x = jd + 68569;
   n = 4 * x / 146097;
   x -= (146097 * n + 3) / 4;
@@ -45,11 +45,11 @@ int main (int argc, char **argv){
   int m, d, y;
   intToDate (jd, m, d, y);
   string day = intToDay (jd);
-  
+
   // expected output:
-  //    2453089
-  //    3/24/2004
-  //    Wed
+  //  2453089
+  //  3/24/2004
+  //  Wed
   cout << jd << endl
     << m << "/" << d << "/" << y << endl
     << day << endl;

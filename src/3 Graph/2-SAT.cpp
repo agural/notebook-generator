@@ -1,7 +1,7 @@
 struct two_sat {
     int N;
     vector<vector<int>> impl;
- 
+
     two_sat(int _N) {
         N = _N;
         impl.resize(2 * N);
@@ -16,10 +16,10 @@ struct two_sat {
     void add_clause(int var1, bool neg1) {
         add_clause(var1, neg1, var1, neg1);
     }
- 
+
     int V, L, C;
     stack<int> view;
- 
+
     int dfs(int loc) {
         visit[loc] = V;
         label[loc] = L++;
@@ -42,9 +42,9 @@ struct two_sat {
         }
         return low;
     }
- 
+
     vector<int> visit, label, comp, in_view;
- 
+
     void reset(vector<int> &v) {
         v.resize(2 * N);
         fill(v.begin(), v.end(), 0);

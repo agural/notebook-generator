@@ -15,7 +15,7 @@ template<typename T> struct heavy_light {
         preorder.push_back(loc);
         vector<int> ch = graph[loc];
         sort(ch.begin(), ch.end(), [&](int i, int j) {
-            return links.size[i] > links.size[j]; });
+                return links.size[i] > links.size[j]; });
         if (loc != par) ch.erase(ch.begin());
         for (int c = 0; c < ch.size(); c++)
             dfs(ch[c], loc, c ? ch[c] : lhv, graph);

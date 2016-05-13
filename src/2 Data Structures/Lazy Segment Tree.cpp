@@ -1,3 +1,9 @@
+// Modular lazy segment tree
+// It takes a type T for vertex values and a type U for update
+// operations. Type T should have an operator '+' specifying how to
+// combine vertices. Type U should have an operator '()' specifying how
+// to apply updates to vertices and an operator '+' for combining two
+// updates. Example below.
 template<typename T, typename U> struct seg_tree_lazy {
     int S, H;
     T zero;
@@ -5,7 +11,7 @@ template<typename T, typename U> struct seg_tree_lazy {
     U noop;
     vector<bool> dirty;
     vector<U> prop;
- 
+
     seg_tree_lazy<T, U>(int _S, T _zero = T(), U _noop = U()) {
         zero = _zero, noop = _noop;
         for (S = 1, H = 1; S < _S; ) S *= 2, H++;
@@ -62,3 +68,37 @@ template<typename T, typename U> struct seg_tree_lazy {
         return res_left + res_right;
     }
 };
+
+// Example that supports following operations:
+// 1: Add amount V to the values in range [L,R].
+// 2: Reset the values in range [L,R] to value V.
+// 3: Query for the sum of the values in range [L,R].
+
+// Here's what T looks like:
+struct node {
+    int sum, width;
+    node operator+(const node &n) {
+        return { sum + n.sum, width + n.width }
+    }
+};
+// Here's what U looks like:
+struct update {
+    bool type; // 0 for add, 1 for reset
+    int value;
+    node operator()(const node &n) {
+        if(type) return { n.width * value, n.width };
+        else return { n.sum + n.width * value, n.width };
+    }
+    update operator+(const update &u) {
+        if(u.type) return u;
+        return { type, value + u.value };
+    }
+};
+int main() {
+    int N = 100;
+    node zero = {0,0};
+    update noop = {false, 0};
+    vector<node> leaves(N, {0,1});
+    seg_tree_lazy<node, update> st(N, zero, noop);
+    st.set_leaves(leaves);
+}

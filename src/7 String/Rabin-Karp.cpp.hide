@@ -13,11 +13,11 @@ namespace rabin_karp {
             }
         }
 
-        #define combine(h, op) \
-            strong_mod res; \
-            for (int i = 0; i < NPRIME; i++) \
-                res.vals[i] = (vals[i] op h.vals[i]) % primes[i]; \
-            return res;
+#define combine(h, op) \
+        strong_mod res; \
+        for (int i = 0; i < NPRIME; i++) \
+        res.vals[i] = (vals[i] op h.vals[i]) % primes[i]; \
+        return res;
 
         bool operator==(const strong_mod &h) { return !memcmp(this, &h, sizeof(strong_mod)); }
         strong_mod operator*(const strong_mod &h) { combine(h, * 1ll *); }
