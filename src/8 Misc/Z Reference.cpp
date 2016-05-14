@@ -51,13 +51,30 @@ bitset<> bs1, bs2(0xfa2), bs3("0101");
     to_string(), to_ulong(), to_ullong()
 numeric_limits<int>::min(), max(), is_signed, digits, has_infinity
 
+// Type Representation Limits
+type                    bits      min .. max      digits
+bool                    8           0 .. 1             0
+char                    8        -128 .. 127           2
+unsigned char           8           0 .. 255           2
+short                   16     -32768 .. 32767         4
+unsigned short          16          0 .. 65535         4
+int                     32       -2e9 .. 2e9           9
+unsigned int            32          0 .. 4e9           9
+long long               64      -9e18 .. 9e9          18
+unsigned long long      64          0 .. 18e18        19
+
+type                    bits       exponent       digits
+float                   32         38                  6
+double                  64         308                15
+long double             80         19728              18
+
 // Bounds (equal_range gives pair {lower_bound, upper_bound})
-1 4 5 6 6 6 8 9 14   // sample multiset
-      ^-----^        // lower_bound(6) => 6, upper_bound(6) => 8
-    ^-^              // lower_bound(5) => 5, upper_bound(5) => 6
-            ^        // lower_bound(7) => 8, upper_bound(7) => 8
-^                    // lower_bound(0) => 1, upper_bound(0) => 1
-                   ^ // lower_bound(20) => (end), upper_bound(20) => (end)
+1 4 5 6 6 6 8 9 14     // sample multiset
+      ^-----^          // lower_bound(6) => 6, upper_bound(6) => 8
+    ^-^                // lower_bound(5) => 5, upper_bound(5) => 6
+             ^         // lower_bound(7) => 8, upper_bound(7) => 8
+^                      // lower_bound(0) => 1, upper_bound(0) => 1
+                     ^ // lower_bound(20) => (end), upper_bound(20) => (end)
 
 // Comparisons
 bool myfunction (int i,int j) { return (i<j); } // function version
