@@ -22,9 +22,7 @@ void add_edge(int v1, int v2) { //add edge v1->v2
     er[  E].e=v1; er[E].nxt=spr[v2]; spr[v2]=E;
 }
 void SCC() {
-    int i;
-    stk[0]=0;
-    memset(v, false, sizeof(v));
+    int i; stk[0]=0; memset(v, false, sizeof(v));
     for(i=1;i<=V;i++) if(!v[i]) fill_forward(i);
     group_cnt=0;
     for(i=stk[0];i>=1;i--) if(v[stk[i]]){group_cnt++; fill_backward(stk[i]);}

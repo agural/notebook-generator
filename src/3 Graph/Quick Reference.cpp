@@ -1,7 +1,8 @@
+typedef pair<int,int> ii; typedef vector<int> vi; typedef vector<ii> vii;
 // Dijkstra (SSSP sparse) | adj is an adjacency list
-priority_queue<pii, vector<pii>, greater<pii>> Q;
-vector<int> dist(N, INF), dad(N, -1); Q.push({0, s}); dist[s] = 0;
-while (!Q.empty()) { pii p = Q.top(); Q.pop();
+priority_queue<ii, vii, greater<ii>> Q;
+vi dist(N, INF), dad(N, -1); Q.push({0, s}); dist[s] = 0;
+while (!Q.empty()) { ii p = Q.top(); Q.pop();
   for(auto p2 : adj[p.second]) {
     if(dist[p.second] + p2.second < dist[p2.first]) {
       dist[p2.first] = dist[p.second] + p2.second;
@@ -22,5 +23,5 @@ for(int j=0;j<m;j++) if(dist[adj[j].src] != INF)
 for(int k=0;k<n;k++) for(int i=0;i<n;i++) for(int j=0;j<n;j++)
   w[i][j] = min(w[i][j], w[i][k]+w[k][j]);
 // Kruskal (MST) | adj is an edge list (w,src,dst) sorted by w
-union_find u(n);
+union_find u(n); vector<Edge> result;
 for(auto e : adj) if(u.unio(e.src, e.dst)) result.push_back(e);
