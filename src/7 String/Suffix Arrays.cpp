@@ -26,7 +26,7 @@ struct SuffixArray {
   // si = s[i,i+l1), sj = s[j,j+l2); returns 1 if si > sj, 0 if equal
   int comp(int i, int l1, int j, int l2) {
     int cl = min(l1, l2);
-    for(int l = 0; l < L; l++)
+    for(int l = 0; l < 31; l++)
       if((cl >> l) & 1) {
         if(P[l][i] != P[l][j]) return P[l][i] < P[l][j] ? -1 : 1;
         i += 1 << l, j += 1 << l; }
